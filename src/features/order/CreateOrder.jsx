@@ -67,11 +67,7 @@ function CreateOrder() {
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let s go!</h2>
 
-      {/* React Router-ből jön a <Form> elem,
-          -POST a HTTP methodot jelölni
-          -action="/order/new" melyik URL, nem kell külön deklarálni mert a Route-ból tudja a form
-      */}
-      {/* <Form method="POST" action="/order/new"> */}
+   
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>
@@ -144,7 +140,7 @@ function CreateOrder() {
         </div>
 
         <div>
-          {/* //Cart Objectet is átadjuk a postnak, egy hidden input fielddel vagyis amit nem kátunk az oldalon. Ez egy trükk amivel az action fgv láthatja a cart-ot */}
+      
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <input
             type="hidden"
@@ -166,14 +162,12 @@ function CreateOrder() {
   );
 }
 
-//Ha sumit-álok egy <Form> <Form> között lévő jsx-et akkor hívodik meg az akció, mintha egy post requestet küldene.
+
 export async function action({ request }) {
-  //FormData az egy regular WebApi amit a browser add. Form-ból vesszük ki vele a cart adatokat, hiszen nem a fetch apival történik az elérés, hanem az ott lévő React Router Post-al.
+ 
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  // console.log(data);
-
-  //Átalakítjuk a küldendő adatokat (POST) kicsit, illetve hozzátesszük mindig külve legyen a priority ne csak akkor amikor bejelüljók a UI-n.
+ 
   const order = {
     ...data,
     cart: JSON.parse(data.cart),
@@ -182,26 +176,24 @@ export async function action({ request }) {
   console.log(order);
 
   const errors = {};
-  //Ha nem jól adjuk meg a telefonszámot akkor hibát fog kiírni.
+
   if (!isValidPhone(order.phone))
     errors.phone =
       "Please give us your correct phone number. We might need it to contact you";
 
-  // Ha az errorba akármilyen objektum akkor visszatér az error-al.
+  
   if (Object.keys(errors).length > 0) return errors;
 
-  // IF everything is okay create a new order and redirect.
-  //Amit új adatot létrehozunk azzal vissza is tér a createOrder, vagyis rögtön meglehet jeleníteni az őj ordert.
+
   const newOrder = await createOrder(order);
 
-  //Trükk -> Direktbe hívom a store-ból a dispatch-et a clearCart funkcióval. Mivel csak React Componenten belül lehet elérni a dispatch-et közvetlenül a useDispatch(), hook-al. (Performancia igényes, nem szabad túlhasználni.)
+  
   store.dispatch(clearCart());
 
-  //Mivel funkció a useNavigatet nem használhatjuk, helyette redirect, a visszatért értéket így beállítja az URL-nek és le is fetcheli az adatot
-  // Innen http://localhost:5173/order/new -> Erre írja át az URL-t http://localhost:5173/order/3W7E7T
+
   return redirect(`/order/${newOrder.id}`);
 
-  // return null;
+  
 }
 
 export default CreateOrder;

@@ -3,7 +3,6 @@ import { getMenu } from "../../services/apiRestaurant";
 import MenuItem from "./MenuItem";
 
 function Menu() {
-  //3. React-router-dom hook segítéségével a componenthez tesszük az adatot.
   const menu = useLoaderData();
   console.log(menu);
 
@@ -16,7 +15,6 @@ function Menu() {
   );
 }
 
-// 1.Create Loader
 export async function loader() {
   const menu = await getMenu();
   return menu;

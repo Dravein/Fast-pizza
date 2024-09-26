@@ -5,9 +5,7 @@ import Loader from "./Loader";
 
 function AppLayout() {
   const navigation = useNavigation();
-  //   //Van egy state propertinek a navigation object-nek ami kiírja hogy idle vagy loading
-  //   console.log(navigation);
-  //Erre a state propra alapzva létretudunk hozni egy derived state-et.
+ 
   const isLoading = navigation.state === "loading";
 
   return (

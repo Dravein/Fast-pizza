@@ -10,7 +10,6 @@ function Error() {
       <h1>Something went wrong 😢</h1>
       <p>{error.data || error.message}</p>
 
-      {/* // to értékével határozzuk meg a LinkButton-ba melyik gombal kell visszatérnie (Css formázás miatt) */}
       <LinkButton to="-1">&larr; Go back</LinkButton>
     </div>
   );

@@ -10,60 +10,26 @@ import {
 import { useEffect } from "react";
 import UpdateOrder from "./UpdateOrder";
 
-// const order = {
-//   id: "ABCDEF",
-//   customer: "Jonas",
-//   phone: "123456789",
-//   address: "Arroios, Lisbon , Portugal",
-//   priority: true,
-//   estimatedDelivery: "2027-04-25T10:00:00",
-//   cart: [
-//     {
-//       pizzaId: 7,
-//       name: "Napoli",
-//       quantity: 3,
-//       unitPrice: 16,
-//       totalPrice: 48,
-//     },
-//     {
-//       pizzaId: 5,
-//       name: "Diavola",
-//       quantity: 2,
-//       unitPrice: 16,
-//       totalPrice: 32,
-//     },
-//     {
-//       pizzaId: 3,
-//       name: "Romana",
-//       quantity: 1,
-//       unitPrice: 15,
-//       totalPrice: 15,
-//     },
-//   ],
-//   position: "-9.000,38.000",
-//   orderPrice: 95,
-//   priorityPrice: 19,
-// };
+
 
 function Order() {
   const order = useLoaderData();
 
-  //Fetch használata egy másik route-ból, url-ből (pl order), mint amin épp oldalon vagyunk. (Order oldalán, menu fetch használata)
+
   const fetcher = useFetcher();
 
   useEffect(
     function () {
-      //Amikor az oldal elspnek renderelődik betölti a menu routerből is az adatokat.
-      //fetcher -> van beépített status stateja
+      
       if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
     },
     [fetcher],
   );
 
-  //Láthatjuk hogy a fetcher objektumba betöltésre került a menu data.
+ 
   console.log(fetcher.data);
 
-  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+
   const {
     id,
     status,
@@ -110,7 +76,7 @@ function Order() {
             key={item.pizzaId}
             isLoadingIngredients={fetcher.state === "loading"}
             ingredients={
-              //Amíg loading status-ba van az OrdeItembe akkor is joinolni akar de akkor még nincs array a fetcher-be, ezért kell hogy addig ?? [] üres array-al térjen vissza.
+           
               fetcher?.data?.find((el) => el.id === item.pizzaId)
                 ?.ingredients ?? []
             }
@@ -136,7 +102,7 @@ function Order() {
   );
 }
 
-// Params-ba megkapja az URL-be átadott paramétereket.
+
 export async function loader({ params }) {
   console.log(params);
   const order = await getOrder(params.orderId);

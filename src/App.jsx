@@ -11,13 +11,13 @@ import { action as updateOrderAction } from "./features/order/UpdateOrder";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
 
-//Új mód a Route-okhoz.
+
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    //Ha Error van valmelyik Rout-nál ez jelenjen meg.
+   
     errorElement: <Error />,
-    //Annak az elementnek lesznek a Chldrenjei amiben vannak.
+   
     children: [
       {
         path: "/",
@@ -26,9 +26,9 @@ const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu />,
-        //2. Csatlakoztatjuk a loader funkciót a Route-hoz URL-hez
+      
         loader: menuLoader,
-        //Előbb kapja el az Error messaget, és az app layout-ba bele renderelve mutatja meg
+       
         errorElement: <Error />,
       },
       { path: "/cart", element: <Cart /> },
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
-        //Működni fog a <fetcher.Form> miatt hiába nem pont ezene a route-on van "/order/:orderId" hanem  <Order /> egy childjen.
+       
         action: updateOrderAction,
       },
     ],

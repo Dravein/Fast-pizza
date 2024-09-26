@@ -63,21 +63,20 @@ const userSlice = createSlice({
       state.username = action.payload;
     },
   },
-  //Ezek a reducerek kezelik a MiddleWare által létrehozott funkciót
+
   extraReducers: (builder) =>
     builder
-      //Amikor még nem érkezett response csak elküdtük. fetchAddress.pending
+
       .addCase(fetchAddress.pending, (state, action) => {
         state.status = "loading";
       })
-      //Amikor a response sikeres.
+
       .addCase(fetchAddress.fulfilled, (state, action) => {
-        //fetchAddress, Aszinkron funkcióból visszakapott értékek vannak benne, csak akkor ha fulfilled
         (state.position = action.payload.position),
           (state.address = action.payload.address),
           (state.status = "idle");
       })
-      //Amikor hiba történik (Pl felhasználó elutasítja a hely felismerést.) action.error.message -> Alapból ide megy az Error.
+
       .addCase(fetchAddress.rejected, (state, action) => {
         (state.status = "error"),
           (state.error =
@@ -85,8 +84,6 @@ const userSlice = createSlice({
       }),
 });
 
-//Action Creator
 export const { updateName } = userSlice.actions;
-// console.log(`userSlice.reducer: ${userSlice.reducer}`);
 
 export default userSlice.reducer;

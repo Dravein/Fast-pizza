@@ -13,7 +13,6 @@ function SearchOrder() {
   }
 
   return (
-    // Automatikusan submitolja az inputot azért tesszük ide a <form> -ot (Működik az Enter)
     <form onSubmit={handleSubmit}>
       <input
         placeholder="Search order #"

@@ -5,7 +5,6 @@ import { getTotalCartQuantity } from "./cartSlice";
 import { formatCurrency } from "../../utils/helpers";
 
 function CartOverview() {
-  // catSlice.js-ben selector funkció (getTotalCartQuantity)
   const totalCartQuantity = useSelector(getTotalCartQuantity);
   const totalCartPrice = useSelector(getTotalCartPrice);
 
